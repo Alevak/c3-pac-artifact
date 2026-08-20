@@ -1,0 +1,185 @@
+{
+  "definition": "OVER = (T_with_conftest - T_baseline) / T_baseline * 100%",
+  "baseline_methodology": "T_baseline = MEASURED: `kubectl create --dry-run=client --validate=false` against the same file batch (pure client-side structural check). `apply` was tried first and rejected: verified via -v=6 that it always does a live GET of the object + namespace even in dry-run mode (needed for its 3-way merge), which is not offline-safe and explains Phase 6's own slow 2000-file baseline run (142s at 3% CPU - a network-wait signature). `create` was verified (same -v=6 check) to make zero network calls, so this runs identically before or after terraform destroy. This represents the manifest-validation step Conftest would be inserted next to, NOT a full CI pipeline (no build/test/image-build steps are measured or estimated here).",
+  "batches": [
+    {
+      "batch_size": 10,
+      "repeats": 15,
+      "realistic_ci_batch": true,
+      "T_baseline": {
+        "mean_ms": 31.7,
+        "p95_ms": 33.7,
+        "n": 15
+      },
+      "T_with_conftest": {
+        "mean_ms": 28.3,
+        "p95_ms": 30.2,
+        "n": 15
+      },
+      "OVER_mean_pct": -10.7,
+      "OVER_p95_pct": -10.4,
+      "absolute_overhead_mean_ms": -3.4
+    },
+    {
+      "batch_size": 50,
+      "repeats": 12,
+      "realistic_ci_batch": true,
+      "T_baseline": {
+        "mean_ms": 37.2,
+        "p95_ms": 38.5,
+        "n": 12
+      },
+      "T_with_conftest": {
+        "mean_ms": 74.1,
+        "p95_ms": 74.7,
+        "n": 12
+      },
+      "OVER_mean_pct": 99.2,
+      "OVER_p95_pct": 94.0,
+      "absolute_overhead_mean_ms": 36.9
+    },
+    {
+      "batch_size": 100,
+      "repeats": 10,
+      "realistic_ci_batch": true,
+      "T_baseline": {
+        "mean_ms": 44.0,
+        "p95_ms": 44.5,
+        "n": 10
+      },
+      "T_with_conftest": {
+        "mean_ms": 135.6,
+        "p95_ms": 178.0,
+        "n": 10
+      },
+      "OVER_mean_pct": 208.2,
+      "OVER_p95_pct": 300.0,
+      "absolute_overhead_mean_ms": 91.6
+    },
+    {
+      "batch_size": 500,
+      "repeats": 8,
+      "realistic_ci_batch": true,
+      "T_baseline": {
+        "mean_ms": 100.8,
+        "p95_ms": 102.6,
+        "n": 8
+      },
+      "T_with_conftest": {
+        "mean_ms": 582.5,
+        "p95_ms": 610.6,
+        "n": 8
+      },
+      "OVER_mean_pct": 477.9,
+      "OVER_p95_pct": 495.1,
+      "absolute_overhead_mean_ms": 481.7
+    },
+    {
+      "batch_size": 2200,
+      "repeats": 6,
+      "realistic_ci_batch": false,
+      "T_baseline": {
+        "mean_ms": 385.3,
+        "p95_ms": 443.4,
+        "n": 6
+      },
+      "T_with_conftest": {
+        "mean_ms": 2466.5,
+        "p95_ms": 2476.8,
+        "n": 6
+      },
+      "OVER_mean_pct": 540.2,
+      "OVER_p95_pct": 458.6,
+      "absolute_overhead_mean_ms": 2081.2
+    }
+  ],
+  "illustrative_full_pipeline_context": {
+    "note": "NOT MEASURED - round illustrative pipeline durations from common practice, included only for scale/context. Do not cite as measured data.",
+    "comparisons": [
+      {
+        "illustrative_pipeline_minutes": 2,
+        "NOT_MEASURED": true,
+        "batch_size": 10,
+        "conftest_overhead_ms": -3.4,
+        "overhead_as_pct_of_illustrative_pipeline": -0.003
+      },
+      {
+        "illustrative_pipeline_minutes": 2,
+        "NOT_MEASURED": true,
+        "batch_size": 50,
+        "conftest_overhead_ms": 36.9,
+        "overhead_as_pct_of_illustrative_pipeline": 0.031
+      },
+      {
+        "illustrative_pipeline_minutes": 2,
+        "NOT_MEASURED": true,
+        "batch_size": 100,
+        "conftest_overhead_ms": 91.6,
+        "overhead_as_pct_of_illustrative_pipeline": 0.076
+      },
+      {
+        "illustrative_pipeline_minutes": 2,
+        "NOT_MEASURED": true,
+        "batch_size": 500,
+        "conftest_overhead_ms": 481.7,
+        "overhead_as_pct_of_illustrative_pipeline": 0.401
+      },
+      {
+        "illustrative_pipeline_minutes": 5,
+        "NOT_MEASURED": true,
+        "batch_size": 10,
+        "conftest_overhead_ms": -3.4,
+        "overhead_as_pct_of_illustrative_pipeline": -0.001
+      },
+      {
+        "illustrative_pipeline_minutes": 5,
+        "NOT_MEASURED": true,
+        "batch_size": 50,
+        "conftest_overhead_ms": 36.9,
+        "overhead_as_pct_of_illustrative_pipeline": 0.012
+      },
+      {
+        "illustrative_pipeline_minutes": 5,
+        "NOT_MEASURED": true,
+        "batch_size": 100,
+        "conftest_overhead_ms": 91.6,
+        "overhead_as_pct_of_illustrative_pipeline": 0.031
+      },
+      {
+        "illustrative_pipeline_minutes": 5,
+        "NOT_MEASURED": true,
+        "batch_size": 500,
+        "conftest_overhead_ms": 481.7,
+        "overhead_as_pct_of_illustrative_pipeline": 0.161
+      },
+      {
+        "illustrative_pipeline_minutes": 10,
+        "NOT_MEASURED": true,
+        "batch_size": 10,
+        "conftest_overhead_ms": -3.4,
+        "overhead_as_pct_of_illustrative_pipeline": -0.001
+      },
+      {
+        "illustrative_pipeline_minutes": 10,
+        "NOT_MEASURED": true,
+        "batch_size": 50,
+        "conftest_overhead_ms": 36.9,
+        "overhead_as_pct_of_illustrative_pipeline": 0.006
+      },
+      {
+        "illustrative_pipeline_minutes": 10,
+        "NOT_MEASURED": true,
+        "batch_size": 100,
+        "conftest_overhead_ms": 91.6,
+        "overhead_as_pct_of_illustrative_pipeline": 0.015
+      },
+      {
+        "illustrative_pipeline_minutes": 10,
+        "NOT_MEASURED": true,
+        "batch_size": 500,
+        "conftest_overhead_ms": 481.7,
+        "overhead_as_pct_of_illustrative_pipeline": 0.08
+      }
+    ]
+  }
+}

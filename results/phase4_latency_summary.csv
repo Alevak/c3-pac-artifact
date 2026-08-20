@@ -1,0 +1,4 @@
+tier,concurrency,n_requests,n_violations_sampled,wall_time_s,throughput_req_s,client_admitted,client_denied,client_error,client_timeout,client_p50_ms,client_p95_ms,client_p99_ms,webhook_n_observed,webhook_discrepancy,webhook_p50_ms,webhook_p95_ms,webhook_p99_ms,webhook_allow_p50_ms,webhook_allow_p95_ms,webhook_allow_p99_ms,webhook_deny_p50_ms,webhook_deny_p95_ms,webhook_deny_p99_ms
+serial_baseline,1,150,13,104.31,1.4,137,13,0,0,697.1,744.4,808.1,175,25,3.36,4.417,8.125,3.365,3.999,8.19,3.25,7.35,7.87
+concurrent_10,10,300,27,34.44,8.7,273,27,0,0,1117.2,1359.4,1403.8,310,10,3.448,4.542,8.633,3.464,4.623,8.723,3.219,3.978,4.73
+concurrent_30,30,300,27,33.6,8.9,273,27,0,0,3285.3,3727.4,3896.8,308,8,3.46,4.738,7.82,3.478,4.829,7.865,3.219,3.978,4.73

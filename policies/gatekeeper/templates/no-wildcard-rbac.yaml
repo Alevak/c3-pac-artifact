@@ -1,0 +1,23 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8snowildcardrbac
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sNoWildcardRBAC
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8snowildcardrbac
+        violation[{"msg": msg}] {
+          rule := input.review.object.rules[_]
+          rule.resources[_] == "*"
+          msg := sprintf("[PCI-Req7.2.1/NIS2-Art21i] Wildcard resources in role: %v", [input.review.object.metadata.name])
+        }
+        violation[{"msg": msg}] {
+          rule := input.review.object.rules[_]
+          rule.verbs[_] == "*"
+          msg := sprintf("[PCI-Req7.2.1/NIS2-Art21i] Wildcard verbs in role: %v", [input.review.object.metadata.name])
+        }

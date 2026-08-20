@@ -1,0 +1,112 @@
+[
+  {
+    "batch_size": 1,
+    "repeats": 15,
+    "baseline": {
+      "mean_ms": 19.1,
+      "p95_ms": 84.8,
+      "min_ms": 13.8,
+      "max_ms": 84.8,
+      "n": 15
+    },
+    "real_policy": {
+      "mean_ms": 17.8,
+      "p95_ms": 21.7,
+      "min_ms": 16.7,
+      "max_ms": 21.7,
+      "n": 15
+    },
+    "overhead_mean_ms": -1.3,
+    "overhead_p95_ms": -63.1,
+    "relative_overhead_mean_pct": -6.8,
+    "relative_overhead_p95_pct": -74.4
+  },
+  {
+    "batch_size": 10,
+    "repeats": 15,
+    "baseline": {
+      "mean_ms": 14.7,
+      "p95_ms": 16.6,
+      "min_ms": 13.9,
+      "max_ms": 16.6,
+      "n": 15
+    },
+    "real_policy": {
+      "mean_ms": 27.2,
+      "p95_ms": 27.9,
+      "min_ms": 26.6,
+      "max_ms": 27.9,
+      "n": 15
+    },
+    "overhead_mean_ms": 12.5,
+    "overhead_p95_ms": 11.3,
+    "relative_overhead_mean_pct": 85.0,
+    "relative_overhead_p95_pct": 68.1
+  },
+  {
+    "batch_size": 100,
+    "repeats": 10,
+    "baseline": {
+      "mean_ms": 20.8,
+      "p95_ms": 33.6,
+      "min_ms": 19.0,
+      "max_ms": 33.6,
+      "n": 10
+    },
+    "real_policy": {
+      "mean_ms": 126.8,
+      "p95_ms": 128.4,
+      "min_ms": 125.6,
+      "max_ms": 128.4,
+      "n": 10
+    },
+    "overhead_mean_ms": 106.0,
+    "overhead_p95_ms": 94.8,
+    "relative_overhead_mean_pct": 509.6,
+    "relative_overhead_p95_pct": 282.1
+  },
+  {
+    "batch_size": 500,
+    "repeats": 10,
+    "baseline": {
+      "mean_ms": 43.2,
+      "p95_ms": 74.8,
+      "min_ms": 39.2,
+      "max_ms": 74.8,
+      "n": 10
+    },
+    "real_policy": {
+      "mean_ms": 571.2,
+      "p95_ms": 577.2,
+      "min_ms": 568.7,
+      "max_ms": 577.2,
+      "n": 10
+    },
+    "overhead_mean_ms": 528.0,
+    "overhead_p95_ms": 502.4,
+    "relative_overhead_mean_pct": 1222.2,
+    "relative_overhead_p95_pct": 671.7
+  },
+  {
+    "batch_size": 2200,
+    "repeats": 8,
+    "baseline": {
+      "mean_ms": 138.0,
+      "p95_ms": 212.5,
+      "min_ms": 124.7,
+      "max_ms": 212.5,
+      "n": 8
+    },
+    "real_policy": {
+      "mean_ms": 2469.4,
+      "p95_ms": 2491.7,
+      "min_ms": 2445.6,
+      "max_ms": 2491.7,
+      "n": 8
+    },
+    "overhead_mean_ms": 2331.4,
+    "overhead_p95_ms": 2279.2,
+    "relative_overhead_mean_pct": 1689.4,
+    "relative_overhead_p95_pct": 1072.6
+  }
+]

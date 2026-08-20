@@ -1,0 +1,34 @@
+# Terraform state and local cache - never commit, contains resource IDs,
+# account details, and (for aws_iam_access_key) secret values in plaintext.
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+crash.log
+crash.*.log
+
+# Real tfvars (contains your own email, IP, budget limits) - only the
+# .EXAMPLE template is meant to be committed.
+terraform.tfvars
+*.tfvars
+!*.tfvars.EXAMPLE
+
+# Kubeconfig / credentials - should never live in this repo.
+kubeconfig
+kubeconfig.*
+.kube/
+*.pem
+*.key
+id_rsa*
+credentials
+.aws/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS cruft
+.DS_Store
+Thumbs.db

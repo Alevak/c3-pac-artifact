@@ -1,0 +1,113 @@
+[
+  {
+    "tier": "serial_baseline",
+    "concurrency": 1,
+    "n_requests": 150,
+    "n_violations_sampled": 13,
+    "wall_time_seconds": 110.87,
+    "throughput_req_per_sec": 1.4,
+    "client_observed": {
+      "admitted": 137,
+      "denied": 13,
+      "error": 0,
+      "timeout": 0,
+      "p50_ms": 714.2,
+      "p95_ms": 853.2,
+      "p99_ms": 1246.7
+    },
+    "webhook_histogram": {
+      "n_observed": 150,
+      "n_expected": 150,
+      "discrepancy": 0,
+      "p50_ms": 3.483,
+      "p95_ms": 4.938,
+      "p99_ms": 9.5
+    },
+    "webhook_allow": {
+      "n_observed": 137,
+      "p50_ms": 3.5,
+      "p95_ms": 5.15,
+      "p99_ms": 9.63
+    },
+    "webhook_deny": {
+      "n_observed": 13,
+      "p50_ms": 3.214,
+      "p95_ms": 4.35,
+      "p99_ms": 4.87
+    }
+  },
+  {
+    "tier": "concurrent_10",
+    "concurrency": 10,
+    "n_requests": 300,
+    "n_violations_sampled": 27,
+    "wall_time_seconds": 34.45,
+    "throughput_req_per_sec": 8.7,
+    "client_observed": {
+      "admitted": 273,
+      "denied": 27,
+      "error": 0,
+      "timeout": 0,
+      "p50_ms": 1124.4,
+      "p95_ms": 1405.0,
+      "p99_ms": 1564.8
+    },
+    "webhook_histogram": {
+      "n_observed": 300,
+      "n_expected": 300,
+      "discrepancy": 0,
+      "p50_ms": 3.471,
+      "p95_ms": 4.533,
+      "p99_ms": 8.0
+    },
+    "webhook_allow": {
+      "n_observed": 273,
+      "p50_ms": 3.478,
+      "p95_ms": 4.279,
+      "p99_ms": 7.135
+    },
+    "webhook_deny": {
+      "n_observed": 27,
+      "p50_ms": 3.318,
+      "p95_ms": 9.65,
+      "p99_ms": 17.3
+    }
+  },
+  {
+    "tier": "concurrent_30",
+    "concurrency": 30,
+    "n_requests": 300,
+    "n_violations_sampled": 27,
+    "wall_time_seconds": 32.98,
+    "throughput_req_per_sec": 9.1,
+    "client_observed": {
+      "admitted": 273,
+      "denied": 27,
+      "error": 0,
+      "timeout": 0,
+      "p50_ms": 3235.1,
+      "p95_ms": 3811.5,
+      "p99_ms": 4122.3
+    },
+    "webhook_histogram": {
+      "n_observed": 300,
+      "n_expected": 300,
+      "discrepancy": 0,
+      "p50_ms": 3.502,
+      "p95_ms": 6.1,
+      "p99_ms": 9.0
+    },
+    "webhook_allow": {
+      "n_observed": 273,
+      "p50_ms": 3.517,
+      "p95_ms": 6.235,
+      "p99_ms": 9.27
+    },
+    "webhook_deny": {
+      "n_observed": 27,
+      "p50_ms": 3.269,
+      "p95_ms": 4.662,
+      "p99_ms": 4.933
+    }
+  }
+]

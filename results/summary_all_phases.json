@@ -1,0 +1,309 @@
+{
+  "note": "Every number below is read directly from this phase's own raw results file - see 'source' fields. Nothing here is recomputed or estimated.",
+  "phase3_admission_evaluation": {
+    "source": "results/phase3_admission_summary.json + results/phase3_admission_raw.csv",
+    "status": "complete",
+    "main_corpus": {
+      "n_manifests": 2200,
+      "n_errors": 0,
+      "overall": {
+        "TP": 200,
+        "FP": 0,
+        "TN": 2000,
+        "FN": 0,
+        "detection_rate": 1.0,
+        "false_positive_rate": 0.0,
+        "precision": 1.0,
+        "n": 2200
+      },
+      "per_category": {
+        "network": {
+          "TP": 40,
+          "FP": 0,
+          "TN": 1880,
+          "FN": 0,
+          "detection_rate": 1.0,
+          "false_positive_rate": 0.0,
+          "precision": 1.0,
+          "n": 1920
+        },
+        "secconfig": {
+          "TP": 40,
+          "FP": 0,
+          "TN": 1880,
+          "FN": 0,
+          "detection_rate": 1.0,
+          "false_positive_rate": 0.0,
+          "precision": 1.0,
+          "n": 1920
+        },
+        "images": {
+          "TP": 40,
+          "FP": 0,
+          "TN": 1880,
+          "FN": 0,
+          "detection_rate": 1.0,
+          "false_positive_rate": 0.0,
+          "precision": 1.0,
+          "n": 1920
+        },
+        "tls": {
+          "TP": 40,
+          "FP": 0,
+          "TN": 100,
+          "FN": 0,
+          "detection_rate": 1.0,
+          "false_positive_rate": 0.0,
+          "precision": 1.0,
+          "n": 140
+        },
+        "rbac": {
+          "TP": 40,
+          "FP": 0,
+          "TN": 100,
+          "FN": 0,
+          "detection_rate": 1.0,
+          "false_positive_rate": 0.0,
+          "precision": 1.0,
+          "n": 140
+        }
+      }
+    },
+    "adversarial_supplement": {
+      "source": "results/adversarial_results.csv",
+      "n_cases": 18,
+      "n_gaps_confirmed": 13,
+      "n_caught_generalized": 1,
+      "n_sanity_ok": 4,
+      "n_sanity_false_positive": 0
+    }
+  },
+  "phase4_latency": {
+    "source": "results/phase4_latency.json",
+    "status": "complete",
+    "note": "webhook_histogram = Gatekeeper's own Prometheus histogram (policy-engine-only latency). client_observed = kubectl round-trip incl. process spawn + network (NOT the same thing - see Phase 4 report).",
+    "tiers": [
+      {
+        "tier": "serial_baseline",
+        "concurrency": 1,
+        "n_requests": 150,
+        "webhook_histogram_ms": {
+          "n_observed": 175,
+          "n_expected": 150,
+          "discrepancy": 25,
+          "p50_ms": 3.36,
+          "p95_ms": 4.417,
+          "p99_ms": 8.125
+        },
+        "client_observed_ms": {
+          "admitted": 137,
+          "denied": 13,
+          "error": 0,
+          "timeout": 0,
+          "p50_ms": 697.1,
+          "p95_ms": 744.4,
+          "p99_ms": 808.1
+        }
+      },
+      {
+        "tier": "concurrent_10",
+        "concurrency": 10,
+        "n_requests": 300,
+        "webhook_histogram_ms": {
+          "n_observed": 310,
+          "n_expected": 300,
+          "discrepancy": 10,
+          "p50_ms": 3.448,
+          "p95_ms": 4.542,
+          "p99_ms": 8.633
+        },
+        "client_observed_ms": {
+          "admitted": 273,
+          "denied": 27,
+          "error": 0,
+          "timeout": 0,
+          "p50_ms": 1117.2,
+          "p95_ms": 1359.4,
+          "p99_ms": 1403.8
+        }
+      },
+      {
+        "tier": "concurrent_30",
+        "concurrency": 30,
+        "n_requests": 300,
+        "webhook_histogram_ms": {
+          "n_observed": 308,
+          "n_expected": 300,
+          "discrepancy": 8,
+          "p50_ms": 3.46,
+          "p95_ms": 4.738,
+          "p99_ms": 7.82
+        },
+        "client_observed_ms": {
+          "admitted": 273,
+          "denied": 27,
+          "error": 0,
+          "timeout": 0,
+          "p50_ms": 3285.3,
+          "p95_ms": 3727.4,
+          "p99_ms": 3896.8
+        }
+      }
+    ]
+  },
+  "phase5_drift_detection": {
+    "source": "results/phase5_drift.json",
+    "status": "complete",
+    "audit_interval_seconds": 60,
+    "trials": [
+      {
+        "trial": 1,
+        "pod_name": "drift-test-1-1787067590",
+        "outcome": "DETECTED",
+        "created_at_server": "2026-08-18T15:39:50Z",
+        "latency_seconds": 32.3
+      },
+      {
+        "trial": 2,
+        "pod_name": "drift-test-2-1787067624",
+        "outcome": "DETECTED",
+        "created_at_server": "2026-08-18T15:40:24Z",
+        "latency_seconds": 58.7
+      },
+      {
+        "trial": 3,
+        "pod_name": "drift-test-3-1787067684",
+        "outcome": "DETECTED",
+        "created_at_server": "2026-08-18T15:41:25Z",
+        "latency_seconds": 57.8
+      }
+    ],
+    "median_latency_seconds": 57.8,
+    "caveat": "n=3 trials - small sample, wide confidence interval. Latency structurally bounded by the 60s periodic audit cycle, not a reactive watch."
+  },
+  "phase6_ci_overhead": {
+    "source": "results/phase6_ci_overhead.json",
+    "status": "complete",
+    "batches": [
+      {
+        "batch_size": 1,
+        "repeats": 15,
+        "baseline": {
+          "mean_ms": 19.1,
+          "p95_ms": 84.8,
+          "min_ms": 13.8,
+          "max_ms": 84.8,
+          "n": 15
+        },
+        "real_policy": {
+          "mean_ms": 17.8,
+          "p95_ms": 21.7,
+          "min_ms": 16.7,
+          "max_ms": 21.7,
+          "n": 15
+        },
+        "overhead_mean_ms": -1.3,
+        "overhead_p95_ms": -63.1,
+        "relative_overhead_mean_pct": -6.8,
+        "relative_overhead_p95_pct": -74.4
+      },
+      {
+        "batch_size": 10,
+        "repeats": 15,
+        "baseline": {
+          "mean_ms": 14.7,
+          "p95_ms": 16.6,
+          "min_ms": 13.9,
+          "max_ms": 16.6,
+          "n": 15
+        },
+        "real_policy": {
+          "mean_ms": 27.2,
+          "p95_ms": 27.9,
+          "min_ms": 26.6,
+          "max_ms": 27.9,
+          "n": 15
+        },
+        "overhead_mean_ms": 12.5,
+        "overhead_p95_ms": 11.3,
+        "relative_overhead_mean_pct": 85.0,
+        "relative_overhead_p95_pct": 68.1
+      },
+      {
+        "batch_size": 100,
+        "repeats": 10,
+        "baseline": {
+          "mean_ms": 20.8,
+          "p95_ms": 33.6,
+          "min_ms": 19.0,
+          "max_ms": 33.6,
+          "n": 10
+        },
+        "real_policy": {
+          "mean_ms": 126.8,
+          "p95_ms": 128.4,
+          "min_ms": 125.6,
+          "max_ms": 128.4,
+          "n": 10
+        },
+        "overhead_mean_ms": 106.0,
+        "overhead_p95_ms": 94.8,
+        "relative_overhead_mean_pct": 509.6,
+        "relative_overhead_p95_pct": 282.1
+      },
+      {
+        "batch_size": 500,
+        "repeats": 10,
+        "baseline": {
+          "mean_ms": 43.2,
+          "p95_ms": 74.8,
+          "min_ms": 39.2,
+          "max_ms": 74.8,
+          "n": 10
+        },
+        "real_policy": {
+          "mean_ms": 571.2,
+          "p95_ms": 577.2,
+          "min_ms": 568.7,
+          "max_ms": 577.2,
+          "n": 10
+        },
+        "overhead_mean_ms": 528.0,
+        "overhead_p95_ms": 502.4,
+        "relative_overhead_mean_pct": 1222.2,
+        "relative_overhead_p95_pct": 671.7
+      },
+      {
+        "batch_size": 2200,
+        "repeats": 8,
+        "baseline": {
+          "mean_ms": 138.0,
+          "p95_ms": 212.5,
+          "min_ms": 124.7,
+          "max_ms": 212.5,
+          "n": 8
+        },
+        "real_policy": {
+          "mean_ms": 2469.4,
+          "p95_ms": 2491.7,
+          "min_ms": 2445.6,
+          "max_ms": 2491.7,
+          "n": 8
+        },
+        "overhead_mean_ms": 2331.4,
+        "overhead_p95_ms": 2279.2,
+        "relative_overhead_mean_pct": 1689.4,
+        "relative_overhead_p95_pct": 1072.6
+      }
+    ],
+    "note": "Baseline = same conftest binary against an empty policy dir, isolating the policy rules' own added cost from conftest's fixed startup cost. Relative % figures are large mainly because baseline is tiny (tens of ms) - see absolute ms overhead for real-world CI planning.",
+    "known_policy_limitations_carried_over": [
+      "req7_no_wildcard_rbac.rego only matches kind==ClusterRole, not Role (inherited from the original policy library, not introduced by the conftest input-shape adaptation)",
+      "req1_network_isolation / req10_audit_logging test controls this corpus wasn't designed to satisfy (external NetworkPolicy data dependency / an audit-logging label no generated manifest sets)"
+    ]
+  },
+  "phase2_dataset": {
+    "source": "dataset/ground_truth.csv (corpus itself, not results/ - it's the input, not a measurement)",
+    "status": "complete"
+  }
+}

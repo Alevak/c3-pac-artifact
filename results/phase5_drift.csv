@@ -1,0 +1,4 @@
+trial,pod_name,outcome,created_at_server,latency_seconds
+1,drift-test-1-1787067590,DETECTED,2026-08-18T15:39:50Z,32.3
+2,drift-test-2-1787067624,DETECTED,2026-08-18T15:40:24Z,58.7
+3,drift-test-3-1787067684,DETECTED,2026-08-18T15:41:25Z,57.8

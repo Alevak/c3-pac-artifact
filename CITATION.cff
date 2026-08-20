@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, or the framework/results it implements,
+  please cite both the software (this repository) and the accompanying
+  article below.
+type: software
+title: >-
+  C3 Policy-as-Code Compliance Framework — Reproducibility Artifact
+authors:
+  - given-names: Oleksandr
+    family-names: Vakhula
+    affiliation: Lviv Polytechnic National University
+  - given-names: Ivan
+    family-names: Opirskyy
+    affiliation: Lviv Polytechnic National University
+repository-code: "TODO: fill in once the GitHub repository is created and pushed"
+license: Apache-2.0
+version: 1.0.0
+date-released: "TODO: fill in on release (YYYY-MM-DD)"
+identifiers:
+  - type: doi
+    value: "TODO: fill in with the Zenodo-minted DOI after the first GitHub Release"
+    description: Zenodo archival DOI for this software release
+preferred-citation:
+  type: article
+  title: >-
+    Policy-as-Code Compliance Framework for PCI DSS and NIS2 in Kubernetes
+    Environments (C3)
+  authors:
+    - given-names: Oleksandr
+      family-names: Vakhula
+      affiliation: Lviv Polytechnic National University
+    - given-names: Ivan
+      family-names: Opirskyy
+      affiliation: Lviv Polytechnic National University
+  journal: Computers & Security
+  year: 2026
+  doi: "TODO: fill in with the Computers & Security DOI once assigned (manuscript COSE-D-26-03044)"

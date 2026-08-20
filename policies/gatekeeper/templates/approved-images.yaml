@@ -1,0 +1,30 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sapprovedimages
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sApprovedImages
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            approvedRegistries:
+              type: array
+              items:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sapprovedimages
+        violation[{"msg": msg}] {
+          c := input.review.object.spec.containers[_]
+          not image_approved(c.image)
+          msg := sprintf("[PCI-Req6.3.3/NIS2-Art21e] Unapproved image: %v", [c.image])
+        }
+        image_approved(img) {
+          reg := input.parameters.approvedRegistries[_]
+          startswith(img, reg)
+        }

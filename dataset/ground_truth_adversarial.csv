@@ -1,0 +1,19 @@
+filename,resource_kind,category,expected_label,hypothesis
+adv-network-hostport.yaml,Pod,network,1,hostPort binds to the host's network interface per-container without setting spec.hostNetwork; the current Rego only checks spec.hostNetwork == true.
+adv-network-hostpid.yaml,Pod,network,1,"hostPID:true shares the host's process namespace - a real host-isolation escape in the same family as hostNetwork, but a different field the current constraint never inspects."
+adv-network-hostipc.yaml,Pod,network,1,"hostIPC:true shares the host's IPC namespace - same host-isolation gap class as hostPID, uninspected field."
+adv-network-omitted-compliant.yaml,Pod,network,0,Sanity true-negative: hostNetwork field omitted entirely (not explicit false) should still be treated as compliant - confirms the default/undefined case doesn't false-positive.
+adv-secconfig-allowprivesc.yaml,Pod,secconfig,1,allowPrivilegeEscalation:true lets a process gain more privileges than its parent without privileged:true - an escalation vector the current Rego (privileged-only) never checks.
+adv-secconfig-capabilities.yaml,Pod,secconfig,1,"capabilities.add:[SYS_ADMIN] grants near-privileged access without privileged:true - Rego only checks the privileged boolean, never the capabilities list."
+adv-secconfig-implicit-root.yaml,Pod,secconfig,1,"runAsUser omitted entirely - many base images default to UID 0. Rego only flags EXPLICIT runAsUser==0, not the (arguably more common) implicit-root case."
+adv-secconfig-podlevel-root.yaml,Pod,secconfig,1,"runAsUser:0 set at spec.securityContext (pod-level, inherited by containers) rather than spec.containers[].securityContext - Rego's c.securityContext.runAsUser only inspects the container-level field."
+adv-secconfig-hardened-compliant.yaml,Pod,secconfig,0,"Sanity true-negative: explicitly hardened pod (allowPrivilegeEscalation:false, capabilities dropped) should not be false-flagged."
+adv-images-prefix-bypass-k8sio.yaml,Pod,images,1,"Rego uses startswith(img, reg) - a naive string-prefix check, not a hostname-boundary check. 'registry.k8s.io.evil.example/...' literally starts with the approved string 'registry.k8s.io'."
+adv-images-prefix-bypass-gcr.yaml,Pod,images,1,"Same startswith prefix bug: 'gcr.io/trusted-malicious/...' starts with the approved string 'gcr.io/trusted' even though it is a different, untrusted path."
+adv-images-legit-complex-tag-compliant.yaml,Pod,images,0,Sanity true-negative: genuinely approved registry with a digest-pinned reference should not false-positive on unusual-looking (but legitimate) tag syntax.
+adv-tls-empty-secretname.yaml,Ingress,tls,1,"secretName is present but empty (""""). Rego's `tls[_].secretName` only checks the field is DEFINED, not non-empty - an empty string still satisfies a bare reference in Rego."
+adv-tls-partial-multihost.yaml,Ingress,tls,1,"Two tls[] entries, only the first has secretName. Rego's tls[_].secretName is existential (""at least one""), so the second host's missing TLS is invisible to the check."
+adv-tls-multihost-compliant.yaml,Ingress,tls,0,Sanity true-negative: both hosts properly TLS-configured should not false-positive.
+adv-rbac-clusteradmin-binding.yaml,ClusterRoleBinding,rbac,1,"Binds a subject to the built-in cluster-admin ClusterRole (full wildcard access) WITHOUT creating any new Role/ClusterRole object. K8sNoWildcardRBAC only matches kind=Role/ClusterRole, so this entire escalation path is invisible to the constraint."
+adv-rbac-enumerated-near-wildcard.yaml,Role,rbac,1,"Every core-group resource type is enumerated explicitly instead of using ""*"" - functionally near-equivalent to wildcard access, but the literal string-equality check (rule.resources[_] == ""*"") never matches."
+adv-rbac-apigroup-wildcard.yaml,Role,rbac,1,"apiGroups:[""*""] grants access to the 'deployments' resource across every API group. The Rego rule never inspects apiGroups at all, only resources and verbs."

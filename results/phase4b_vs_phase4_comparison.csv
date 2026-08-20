@@ -1,0 +1,10 @@
+tier,concurrency,metric,fail_open_ms,fail_closed_ms,diff_ms
+serial_baseline,1,p50_ms,3.36,3.483,0.123
+serial_baseline,1,p95_ms,4.417,4.938,0.521
+serial_baseline,1,p99_ms,8.125,9.5,1.375
+concurrent_10,10,p50_ms,3.448,3.471,0.023
+concurrent_10,10,p95_ms,4.542,4.533,-0.009
+concurrent_10,10,p99_ms,8.633,8.0,-0.633
+concurrent_30,30,p50_ms,3.46,3.502,0.042
+concurrent_30,30,p95_ms,4.738,6.1,1.362
+concurrent_30,30,p99_ms,7.82,9.0,1.18

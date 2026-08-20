@@ -1,0 +1,138 @@
+{
+  "original_replicas": 3,
+  "time_to_first_failure_seconds": 11.71,
+  "cde_probe_attempts": [
+    {
+      "attempt": 0,
+      "elapsed_s": 1.28,
+      "admitted": true,
+      "error_snippet": null
+    },
+    {
+      "attempt": 1,
+      "elapsed_s": 3.04,
+      "admitted": true,
+      "error_snippet": null
+    },
+    {
+      "attempt": 2,
+      "elapsed_s": 4.77,
+      "admitted": true,
+      "error_snippet": null
+    },
+    {
+      "attempt": 3,
+      "elapsed_s": 6.5,
+      "admitted": true,
+      "error_snippet": null
+    },
+    {
+      "attempt": 4,
+      "elapsed_s": 8.23,
+      "admitted": true,
+      "error_snippet": null
+    },
+    {
+      "attempt": 5,
+      "elapsed_s": 9.96,
+      "admitted": true,
+      "error_snippet": null
+    },
+    {
+      "attempt": 6,
+      "elapsed_s": 11.71,
+      "admitted": false,
+      "error_snippet": "Error from server (InternalError): error when creating \"/tmp/failinj-cde-probe-6.yaml\": Internal error occurred: failed calling webhook \"validation.gatekeeper.sh\": failed to call webhook: Post \"https:"
+    }
+  ],
+  "kube_system_probe_during_outage": {
+    "admitted": true,
+    "error": null
+  },
+  "recovery_confirmed": {
+    "enforcement_deny_works": true,
+    "enforcement_allow_works": true
+  },
+  "step_log": [
+    {
+      "t": "2026-08-18T18:45:18.182856+00:00",
+      "step": "start",
+      "detail": "Reading current replica count before touching anything"
+    },
+    {
+      "t": "2026-08-18T18:45:18.940563+00:00",
+      "step": "original_state",
+      "detail": "gatekeeper-controller-manager currently at 3 replicas"
+    },
+    {
+      "t": "2026-08-18T18:45:18.940641+00:00",
+      "step": "baseline_check",
+      "detail": "Confirming CDE create works normally BEFORE scaling down"
+    },
+    {
+      "t": "2026-08-18T18:45:19.660264+00:00",
+      "step": "baseline_cde_create",
+      "detail": "success=True"
+    },
+    {
+      "t": "2026-08-18T18:45:19.660312+00:00",
+      "step": "scale_to_zero",
+      "detail": "kubectl scale deploy/gatekeeper-controller-manager --replicas=0"
+    },
+    {
+      "t": "2026-08-18T18:45:20.239729+00:00",
+      "step": "poll_cde_start",
+      "detail": "Polling CDE namespace create every 1s until it fails (fail-closed engaging)"
+    },
+    {
+      "t": "2026-08-18T18:45:31.372513+00:00",
+      "step": "cde_first_failure",
+      "detail": "CDE create FAILED after 11.71s (fail-closed engaged). Error: Error from server (InternalError): error when creating \"/tmp/failinj-cde-probe-6.yaml\": Internal error occurred: failed calling webhook \"validation.gatekeeper.sh\": failed to call webhook: Post \"https://gatekeeper-webhook-service.gatekeeper-system.svc:443/v1/admit?timeout=3s\": no endpoints available "
+    },
+    {
+      "t": "2026-08-18T18:45:31.372555+00:00",
+      "step": "kubesystem_check",
+      "detail": "Testing kube-system create WHILE gatekeeper is still at 0 replicas (scoping should protect this)"
+    },
+    {
+      "t": "2026-08-18T18:45:31.945224+00:00",
+      "step": "kubesystem_result",
+      "detail": "success=True"
+    },
+    {
+      "t": "2026-08-18T18:45:31.945294+00:00",
+      "step": "restore_start",
+      "detail": "Restoring gatekeeper-controller-manager to 3 replicas"
+    },
+    {
+      "t": "2026-08-18T18:45:32.534627+00:00",
+      "step": "wait_ready",
+      "detail": "Polling for replicas to become Ready"
+    },
+    {
+      "t": "2026-08-18T18:45:45.681521+00:00",
+      "step": "replicas_ready",
+      "detail": "3/3 ready after 9s"
+    },
+    {
+      "t": "2026-08-18T18:45:45.681578+00:00",
+      "step": "recovery_check_deny",
+      "detail": "Confirming enforcement resumed: privileged pod should be denied again"
+    },
+    {
+      "t": "2026-08-18T18:45:46.298197+00:00",
+      "step": "recovery_deny_result",
+      "detail": "correctly_denied=True"
+    },
+    {
+      "t": "2026-08-18T18:45:46.298281+00:00",
+      "step": "recovery_check_allow",
+      "detail": "Confirming compliant pod still admitted"
+    },
+    {
+      "t": "2026-08-18T18:45:47.031214+00:00",
+      "step": "recovery_allow_result",
+      "detail": "admitted=True"
+    }
+  ]
+}

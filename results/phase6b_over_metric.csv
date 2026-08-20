@@ -1,0 +1,6 @@
+batch_size,realistic_ci_batch,repeats,T_baseline_mean_ms,T_baseline_p95_ms,T_conftest_mean_ms,T_conftest_p95_ms,OVER_mean_pct,OVER_p95_pct,absolute_overhead_mean_ms
+10,True,15,31.7,33.7,28.3,30.2,-10.7,-10.4,-3.4
+50,True,12,37.2,38.5,74.1,74.7,99.2,94.0,36.9
+100,True,10,44.0,44.5,135.6,178.0,208.2,300.0,91.6
+500,True,8,100.8,102.6,582.5,610.6,477.9,495.1,481.7
+2200,False,6,385.3,443.4,2466.5,2476.8,540.2,458.6,2081.2

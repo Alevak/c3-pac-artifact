@@ -1,0 +1,149 @@
+{
+  "apiVersion": "admissionregistration.k8s.io/v1",
+  "kind": "ValidatingWebhookConfiguration",
+  "metadata": {
+    "annotations": {
+      "meta.helm.sh/release-name": "gatekeeper",
+      "meta.helm.sh/release-namespace": "gatekeeper-system"
+    },
+    "labels": {
+      "app": "gatekeeper",
+      "app.kubernetes.io/managed-by": "Helm",
+      "chart": "gatekeeper",
+      "gatekeeper.sh/system": "yes",
+      "heritage": "Helm",
+      "release": "gatekeeper"
+    },
+    "name": "gatekeeper-validating-webhook-configuration"
+  },
+  "webhooks": [
+    {
+      "admissionReviewVersions": [
+        "v1",
+        "v1beta1"
+      ],
+      "clientConfig": {
+        "caBundle": "REDACTED_FOR_ARTIFACT \u2014 auto-populated by Gatekeeper cert-rotation on install; not a credential, just stale/environment-specific and meaningless outside the destroyed cluster",
+        "service": {
+          "name": "gatekeeper-webhook-service",
+          "namespace": "gatekeeper-system",
+          "path": "/v1/admit",
+          "port": 443
+        }
+      },
+      "failurePolicy": "Fail",
+      "matchPolicy": "Exact",
+      "name": "validation.gatekeeper.sh",
+      "namespaceSelector": {
+        "matchExpressions": [
+          {
+            "key": "admission.gatekeeper.sh/ignore",
+            "operator": "DoesNotExist"
+          },
+          {
+            "key": "kubernetes.io/metadata.name",
+            "operator": "NotIn",
+            "values": [
+              "gatekeeper-system",
+              "kube-system"
+            ]
+          },
+          {
+            "key": "pci-cde",
+            "operator": "In",
+            "values": [
+              "true"
+            ]
+          }
+        ]
+      },
+      "objectSelector": {},
+      "rules": [
+        {
+          "apiGroups": [
+            "*"
+          ],
+          "apiVersions": [
+            "*"
+          ],
+          "operations": [
+            "CREATE",
+            "UPDATE"
+          ],
+          "resources": [
+            "*",
+            "pods/ephemeralcontainers",
+            "pods/exec",
+            "pods/log",
+            "pods/eviction",
+            "pods/portforward",
+            "pods/proxy",
+            "pods/attach",
+            "pods/binding",
+            "pods/resize",
+            "deployments/scale",
+            "replicasets/scale",
+            "statefulsets/scale",
+            "replicationcontrollers/scale",
+            "services/proxy",
+            "nodes/proxy",
+            "services/status"
+          ],
+          "scope": "*"
+        }
+      ],
+      "sideEffects": "None",
+      "timeoutSeconds": 3
+    },
+    {
+      "admissionReviewVersions": [
+        "v1",
+        "v1beta1"
+      ],
+      "clientConfig": {
+        "caBundle": "REDACTED_FOR_ARTIFACT \u2014 auto-populated by Gatekeeper cert-rotation on install; not a credential, just stale/environment-specific and meaningless outside the destroyed cluster",
+        "service": {
+          "name": "gatekeeper-webhook-service",
+          "namespace": "gatekeeper-system",
+          "path": "/v1/admitlabel",
+          "port": 443
+        }
+      },
+      "failurePolicy": "Fail",
+      "matchPolicy": "Exact",
+      "name": "check-ignore-label.gatekeeper.sh",
+      "namespaceSelector": {
+        "matchExpressions": [
+          {
+            "key": "kubernetes.io/metadata.name",
+            "operator": "NotIn",
+            "values": [
+              "gatekeeper-system"
+            ]
+          }
+        ]
+      },
+      "objectSelector": {},
+      "rules": [
+        {
+          "apiGroups": [
+            ""
+          ],
+          "apiVersions": [
+            "*"
+          ],
+          "operations": [
+            "CREATE",
+            "UPDATE"
+          ],
+          "resources": [
+            "namespaces"
+          ],
+          "scope": "*"
+        }
+      ],
+      "sideEffects": "None",
+      "timeoutSeconds": 3
+    }
+  ]
+}

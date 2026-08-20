@@ -1,0 +1,14 @@
+# Copy to terraform.tfvars and fill in with your own values.
+# Both variables below are REQUIRED (no defaults) - terraform will prompt
+# interactively if you leave them out, but it's easier to just set them here.
+
+alert_email = "you@example.com"  # AWS Budget alerts go here
+
+# Your current public IP, so the EKS API endpoint isn't open to 0.0.0.0/0.
+# Find it with: curl -s https://checkip.amazonaws.com
+cluster_endpoint_public_access_cidrs = ["YOUR.IP.HERE/32"]
+
+# Optional (defaults shown):
+# region           = "eu-central-1"
+# node_count       = 3
+# budget_limit_usd = 25

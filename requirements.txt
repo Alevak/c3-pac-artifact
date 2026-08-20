@@ -1,0 +1,9 @@
+# No third-party Python packages are required. Every script in scripts/
+# and dataset/ uses only the standard library (csv, json, os, subprocess,
+# statistics, urllib.request, concurrent.futures, pathlib, datetime).
+# This file exists so `pip install -r requirements.txt` is a documented
+# no-op rather than a missing step - confirmed by grepping every import
+# statement across the codebase (see ENVIRONMENT.md).
+#
+# Python 3.10+ is required (uses match-free but modern typing/pathlib
+# features present since 3.10; developed and verified on 3.14.5).

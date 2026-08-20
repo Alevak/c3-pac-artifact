@@ -1,0 +1,26 @@
+{
+  "audit_interval_seconds": 60,
+  "trials": [
+    {
+      "trial": 1,
+      "pod_name": "drift-test-1-1787067590",
+      "outcome": "DETECTED",
+      "created_at_server": "2026-08-18T15:39:50Z",
+      "latency_seconds": 32.3
+    },
+    {
+      "trial": 2,
+      "pod_name": "drift-test-2-1787067624",
+      "outcome": "DETECTED",
+      "created_at_server": "2026-08-18T15:40:24Z",
+      "latency_seconds": 58.7
+    },
+    {
+      "trial": 3,
+      "pod_name": "drift-test-3-1787067684",
+      "outcome": "DETECTED",
+      "created_at_server": "2026-08-18T15:41:25Z",
+      "latency_seconds": 57.8
+    }
+  ]
+}

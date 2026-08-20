@@ -1,0 +1,18 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8snohostpath
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sNoHostPath
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8snohostpath
+        violation[{"msg": msg}] {
+          vol := input.review.object.spec.volumes[_]
+          vol.hostPath
+          msg := sprintf("[PCI-Req2.2.1/NIS2-Art21e] hostPath volume: %v", [vol.name])
+        }
